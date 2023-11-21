@@ -1,0 +1,124 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class BusquedaBinaria {
+
+    public static int busquedaBinaria(ArrayList<Integer> lista, int objetivo) {
+        int izquierda = 0;
+        int derecha = lista.size() - 1;
+
+        while (izquierda <= derecha) {
+            int medio = izquierda + (derecha - izquierda) / 2;
+            int elementoMedio = lista.get(medio);
+
+            if (elementoMedio == objetivo) {
+                return medio;  // El elemento objetivo fue encontrado, devuelve su índice
+            } else if (elementoMedio < objetivo) {
+                izquierda = medio + 1;  // El elemento objetivo está en la mitad derecha
+            } else {
+                derecha = medio - 1;  // El elemento objetivo está en la mitad izquierda
+            }
+        }
+
+        return -1;  // El elemento objetivo no está en la lista
+    }
+    
+    public static int busquedaTernaria(ArrayList<Integer> lista, int objetivo) {
+    int izquierda = 0;
+    int derecha = lista.size() - 1;
+
+    while (izquierda <= derecha) {
+        int tercio1 = izquierda + (derecha - izquierda) / 3;
+        int tercio2 = derecha - (derecha - izquierda) / 3;
+
+        int elementoTercio1 = lista.get(tercio1);
+        int elementoTercio2 = lista.get(tercio2);
+
+        if (elementoTercio1 == objetivo) {
+            return tercio1;  // El elemento objetivo fue encontrado, devuelve su índice
+        }
+
+        if (elementoTercio2 == objetivo) {
+            return tercio2;  // El elemento objetivo fue encontrado, devuelve su índice
+        }
+
+        if (objetivo < elementoTercio1) {
+            derecha = tercio1 - 1;  // El elemento objetivo está en la primera tercera parte
+        } else if (objetivo > elementoTercio2) {
+            izquierda = tercio2 + 1;  // El elemento objetivo está en la última tercera parte
+        } else {
+            izquierda = tercio1 + 1;
+            derecha = tercio2 - 1;  // El elemento objetivo está en la segunda tercera parte
+        }
+    }
+
+    return -1;  // El elemento objetivo no está en la lista
+}
+
+
+    public static void main(String[] args) {
+        try {
+            // Lee los números desde el archivo
+            Scanner scanner = new Scanner(new File("100numeros.txt"));
+
+            // Almacena los números en un ArrayList
+            ArrayList<Integer> miLista = new ArrayList<>();
+            while (scanner.hasNextInt()) {
+                miLista.add(scanner.nextInt());
+            }
+
+            // Cierra el scanner
+            scanner.close();
+
+            // Continúa con la búsqueda binaria
+            int elementoObjetivo = 55;
+           
+            
+             // Mide el tiempo de inicio
+            long tiempoInicio = System.nanoTime();
+
+            // Llamada al método de búsqueda binaria
+            int resultado = busquedaBinaria(miLista, elementoObjetivo);
+
+            // Mide el tiempo de finalización
+            long tiempoFin = System.nanoTime();
+            
+            long tiempoInicioTernaria = System.nanoTime();
+            int resultadoTernaria = busquedaTernaria(miLista, elementoObjetivo);
+            long tiempoFinTernaria = System.nanoTime();
+            
+            if (resultado != -1) {
+            if (resultado == 0) {
+                System.out.println("Busqueda Binaria: \nEl dato " + elementoObjetivo + " fue encontrado en la posicion 0 (mitad izquierda).");
+            } else if (resultado == miLista.size() - 1) {
+                System.out.println("Busqueda Binaria: \nEl dato " + elementoObjetivo + " fue encontrado en la ultima posicion (mitad derecha).");
+            } else {
+                System.out.println("Busqueda Binaria: \nEl dato " + elementoObjetivo + " fue encontrado en la posicion " + resultado + " (en el medio).");
+            }
+        } else {
+            System.out.println("El dato " + elementoObjetivo + " no esta en la lista.");
+        }
+            
+             System.out.println("Tiempo de ejecucion: " + (tiempoFin - tiempoInicio) + " nanosegundos");
+             
+             if (resultadoTernaria != -1) {
+            if (resultadoTernaria == 0) {
+                System.out.println("Busqueda Ternaria: \nEl dato " + elementoObjetivo + " fue encontrado en la posicion 0 (tercio izquierdo).");
+            } else if (resultadoTernaria == miLista.size() - 1) {
+                System.out.println("Busqueda Ternaria: \nEl dato " + elementoObjetivo + " fue encontrado en la ultima posicion (tercio derecho).");
+            } else {
+                System.out.println("Busqueda Ternaria: \nEl dato " + elementoObjetivo + " fue encontrado en la posicion " + resultadoTernaria + " (tercio medio).");
+            }
+        } else {
+            System.out.println("Busqueda Ternaria: El dato " + elementoObjetivo + " no esta en la lista.");
+        }
+
+        System.out.println("Tiempo de ejecucion: " + (tiempoFinTernaria - tiempoInicioTernaria) + " nanosegundos");
+
+    } catch (FileNotFoundException e) {
+        System.out.println("Archivo no encontrado: " + e.getMessage());
+    }
+  }
+}
