@@ -14,15 +14,15 @@ public class BusquedaBinaria {
             int elementoMedio = lista.get(medio);
 
             if (elementoMedio == objetivo) {
-                return medio;  // El elemento objetivo fue encontrado, devuelve su índice
+                return medio;  //lo encuentra en la mitad
             } else if (elementoMedio < objetivo) {
-                izquierda = medio + 1;  // El elemento objetivo está en la mitad derecha
+                izquierda = medio + 1;  //lo encuentra en la mitad derecha
             } else {
-                derecha = medio - 1;  // El elemento objetivo está en la mitad izquierda
+                derecha = medio - 1;  //lo encuentra en la mitad izquierda
             }
         }
 
-        return -1;  // El elemento objetivo no está en la lista
+        return -1;  //no lo encuentra
     }
     
     public static int busquedaTernaria(ArrayList<Integer> lista, int objetivo) {
@@ -37,52 +37,48 @@ public class BusquedaBinaria {
         int elementoTercio2 = lista.get(tercio2);
 
         if (elementoTercio1 == objetivo) {
-            return tercio1;  // El elemento objetivo fue encontrado, devuelve su índice
+            return tercio1;
         }
 
         if (elementoTercio2 == objetivo) {
-            return tercio2;  // El elemento objetivo fue encontrado, devuelve su índice
+            return tercio2;
         }
 
         if (objetivo < elementoTercio1) {
-            derecha = tercio1 - 1;  // El elemento objetivo está en la primera tercera parte
+            derecha = tercio1 - 1;  //lo encuentra en la primera tercera parte
         } else if (objetivo > elementoTercio2) {
-            izquierda = tercio2 + 1;  // El elemento objetivo está en la última tercera parte
+            izquierda = tercio2 + 1;  //lo encuentra en la ultima tercera parte
         } else {
             izquierda = tercio1 + 1;
-            derecha = tercio2 - 1;  // El elemento objetivo está en la segunda tercera parte
+            derecha = tercio2 - 1;  //lo encuentra en segunda tercera parte
         }
     }
 
-    return -1;  // El elemento objetivo no está en la lista
+    return -1;
 }
 
 
     public static void main(String[] args) {
         try {
-            // Lee los números desde el archivo
             Scanner scanner = new Scanner(new File("100numeros.txt"));
 
-            // Almacena los números en un ArrayList
             ArrayList<Integer> miLista = new ArrayList<>();
             while (scanner.hasNextInt()) {
                 miLista.add(scanner.nextInt());
             }
-
-            // Cierra el scanner
             scanner.close();
 
-            // Continúa con la búsqueda binaria
+            //realiza la busqueda del dato en especifico
             int elementoObjetivo = 55;
            
             
-             // Mide el tiempo de inicio
+             //toma tiempo de inicio
             long tiempoInicio = System.nanoTime();
 
-            // Llamada al método de búsqueda binaria
+            //llamado del metodo de busqueda binaria
             int resultado = busquedaBinaria(miLista, elementoObjetivo);
 
-            // Mide el tiempo de finalización
+            //toma tiempo de finalización
             long tiempoFin = System.nanoTime();
             
             long tiempoInicioTernaria = System.nanoTime();
