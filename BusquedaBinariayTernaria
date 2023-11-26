@@ -14,11 +14,11 @@ public class BusquedaBinaria {
             int elementoMedio = lista.get(medio);
 
             if (elementoMedio == objetivo) {
-                return medio;  // El elemento objetivo fue encontrado, devuelve su índice
+                return medio;
             } else if (elementoMedio < objetivo) {
-                izquierda = medio + 1;  // El elemento objetivo está en la mitad derecha
+                izquierda = medio + 1;
             } else {
-                derecha = medio - 1;  // El elemento objetivo está en la mitad izquierda
+                derecha = medio - 1;
             }
         }
 
